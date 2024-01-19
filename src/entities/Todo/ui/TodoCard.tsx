@@ -1,5 +1,6 @@
 import { Draggable } from "react-beautiful-dnd";
 import { Todo } from "../model/types/todo";
+import DragIcon from "../../../shared/assets/icons/drag.svg";
 
 interface TodoCardProps {
   className?: string;
@@ -10,16 +11,21 @@ export const TodoCard = (props: TodoCardProps) => {
   const { todo } = props;
 
   return (
-    <Draggable draggableId={todo.id.toString()} index={todo.order}>
+    <Draggable
+      draggableId={"todoDraggableId-" + todo.id.toString()}
+      index={todo.order}
+    >
       {(provided, snapshot) => (
         <div
           ref={provided.innerRef}
           {...provided.draggableProps}
-          {...provided.dragHandleProps}
           className="border-grey hover:bg-grey-lighter cursor-pointer rounded border-b bg-white p-2"
         >
-          <input value={todo.task} />
+          <p>{todo.task}</p>
           <div className="text-grey-darker ml-2 mt-8 flex items-start justify-between">
+            <div {...provided.dragHandleProps}>
+              <DragIcon width={20} height={20} />
+            </div>
             <span className="flex items-center text-xs">
               <svg
                 className="mr-1 h-4 fill-current"

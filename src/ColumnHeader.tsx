@@ -1,8 +1,10 @@
 import { ChangeEvent, useState } from "react";
+import { DraggableProvidedDragHandleProps } from "react-beautiful-dnd";
 import { todoColumnsActions } from "./entities/Todo/model/slices/todosSlice";
 import { TodoColumn } from "./entities/Todo/model/types/todo";
 import { useAppDispatch } from "./shared/hooks/useAppDispatch";
 import TrashIcon from "./shared/assets/icons/trash.svg";
+import DragIcon from "./shared/assets/icons/drag.svg";
 
 interface CardListHeaderProps {
   column: TodoColumn;
@@ -36,6 +38,7 @@ export const ColumnHeader = (props: CardListHeaderProps) => {
         value={columnName}
         onChange={onColumnNameChange}
       />
+      <DragIcon width={20} height={20} />
       <button onClick={deleteColumn}>
         <TrashIcon width={20} height={20} />
       </button>

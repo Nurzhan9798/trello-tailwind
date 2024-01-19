@@ -1,21 +1,32 @@
-import React from "react";
-import { DragDropContext, DropResult } from "react-beautiful-dnd";
+import React, { useEffect, useState } from "react";
+import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
 import { Column } from "./Column";
-import { todosActions } from "./entities/Todo/model/slices/todosSlice";
+import {
+  todoColumnsActions,
+  todosActions,
+} from "./entities/Todo/model/slices/todosSlice";
+import { TodoColumn } from "./entities/Todo/model/types/todo";
 import { AddNewColumnFeature } from "./feature/AddNewColumnFeature/AddNewColumnFeature";
 import { useAppDispatch } from "./shared/hooks/useAppDispatch";
 import { useAppSelector } from "./shared/hooks/useAppSelector";
 
 export const CardList = () => {
   const todoColumns = useAppSelector((state) => state.todoColumns);
+  const [columns, setColumns] = useState(todoColumns);
   const dispatch = useAppDispatch();
-  const onDragEnd = (result: DropResult) => {
-    if (!result || !result.destination || !result.source) return;
-    const todoId = result.draggableId;
-    const destinationOrder = result.destination.index;
-    const sourceOrder = result.source.index;
-    const destinationColumnId = result.destination.droppableId;
-    const sourceColumnId = result.source.droppableId;
+
+  useEffect(() => {
+    const newColumns = [...todoColumns].sort((a, b) => a.order - b.order);
+
+    setColumns(newColumns);
+  }, [todoColumns]);
+  const onTaskDragEnd = (result: DropResult) => {
+    const { source, destination, draggableId } = result;
+    const todoId = draggableId.split("-")[1];
+    const destinationOrder = destination.index;
+    const sourceOrder = source.index;
+    const destinationColumnId = destination.droppableId.split("-")[1];
+    const sourceColumnId = source.droppableId.split("-")[1];
     dispatch(
       todosActions.sortTodosInColumn({
         destinationColumnId: parseInt(destinationColumnId),
@@ -26,14 +37,53 @@ export const CardList = () => {
       }),
     );
   };
+
+  const onColumnDragEnd = (result: DropResult) => {
+    const { source, destination, draggableId } = result;
+    const columnId = draggableId.split("-")[1];
+    const destinationOrder = destination.index;
+    const sourceOrder = source.index;
+    dispatch(
+      todoColumnsActions.sortTodoColumns({
+        sourceOrder: sourceOrder,
+        destinationOrder: destinationOrder,
+        columnId: parseInt(columnId),
+      }),
+    );
+  };
+
+  const onDragEnd = (result: DropResult) => {
+    if (!result || !result.destination || !result.source) return;
+    const { type } = result;
+    switch (type) {
+      case "task":
+        onTaskDragEnd(result);
+        break;
+      case "column":
+        onColumnDragEnd(result);
+        break;
+      default:
+        break;
+    }
+  };
+
   return (
-    <div className="flex grow items-start overflow-x-scroll px-4 py-8">
-      <DragDropContext onDragEnd={onDragEnd}>
-        {todoColumns.map((column) => (
-          <Column key={column.id} column={column} />
-        ))}
-        <AddNewColumnFeature />
-      </DragDropContext>
-    </div>
+    <DragDropContext onDragEnd={onDragEnd}>
+      <Droppable droppableId="board" direction="horizontal" type="column">
+        {(provided) => (
+          <div
+            {...provided.droppableProps}
+            ref={provided.innerRef}
+            className="flex grow items-start overflow-x-scroll px-4 py-8"
+          >
+            {columns.map((column) => (
+              <Column key={column.id} column={column} />
+            ))}
+            {provided.placeholder}
+            <AddNewColumnFeature />;
+          </div>
+        )}
+      </Droppable>
+    </DragDropContext>
   );
 };

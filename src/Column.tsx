@@ -13,13 +13,23 @@ export const Column = (props: TodoColumnProps) => {
   const { column } = props;
 
   return (
-    <div
-      key={column.id}
-      className="mr-3 shrink-0 grow-0 basis-72  overflow-hidden overflow-y-auto rounded bg-gray-100"
+    <Draggable
+      draggableId={"columnDraggableId-" + column.id.toString()}
+      index={column.order}
     >
-      <ColumnHeader column={column} />
-      <ColumnTodos column={column} />
-      <AddNewTodoFeature columnId={column.id} />
-    </div>
+      {(provided, snapshot) => (
+        <div
+          ref={provided.innerRef}
+          {...provided.draggableProps}
+          className="mr-3 shrink-0 grow-0 basis-72  overflow-hidden overflow-y-auto rounded bg-gray-100"
+        >
+          <div {...provided.dragHandleProps}>
+            <ColumnHeader column={column} />
+          </div>
+          <ColumnTodos column={column} />
+          <AddNewTodoFeature columnId={column.id} />
+        </div>
+      )}
+    </Draggable>
   );
 };

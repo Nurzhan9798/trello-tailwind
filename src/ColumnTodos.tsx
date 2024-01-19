@@ -24,7 +24,7 @@ export const ColumnTodos = (props: ColumnTodosProps) => {
   }, [todos]);
 
   return (
-    <Droppable droppableId={column.id.toString()}>
+    <Droppable droppableId={"columnDropId-" + column.id.toString()} type="task">
       {(provided, snapshot) => (
         <div
           {...provided.droppableProps}

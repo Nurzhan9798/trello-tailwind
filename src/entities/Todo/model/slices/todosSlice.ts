@@ -111,6 +111,7 @@ export const todosSlice = createSlice({
         });
 
         const todoIndex = state.findIndex((todo) => todo.id === todoId);
+        console.log(todoIndex);
         state[todoIndex].order = destinationOrder;
         state[todoIndex].columnId = destinationColumnId;
       }
@@ -157,6 +158,30 @@ export const todoColumnsSlice = createSlice({
     },
     deleteColumnById: (state, action: PayloadAction<number>) => {
       return state.filter((column) => column.id !== action.payload);
+    },
+    sortTodoColumns: (
+      state,
+      action: PayloadAction<{
+        columnId: number;
+        sourceOrder: number;
+        destinationOrder: number;
+      }>,
+    ) => {
+      const { sourceOrder, destinationOrder, columnId } = action.payload;
+      if (sourceOrder === destinationOrder) return state;
+      const isUp = destinationOrder < sourceOrder;
+      state.forEach((column) => {
+        if (isUp) {
+          if (column.order >= destinationOrder && column.order < sourceOrder)
+            column.order++;
+        } else {
+          if (column.order > sourceOrder && column.order <= destinationOrder) {
+            column.order--;
+          }
+        }
+      });
+      const columnIndex = state.findIndex((column) => column.id === columnId);
+      state[columnIndex].order = destinationOrder;
     },
   },
 });
