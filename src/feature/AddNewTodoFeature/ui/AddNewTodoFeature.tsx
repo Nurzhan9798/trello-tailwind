@@ -1,6 +1,6 @@
 import { ChangeEvent, useState } from "react";
-import { todosActions } from "../../entities/Todo/model/slices/todosSlice";
-import { useAppDispatch } from "../../shared/hooks/useAppDispatch";
+import { todosActions } from "entities/Todo";
+import { useAppDispatch } from "shared/hooks/useAppDispatch";
 
 interface AddNewTodoFeatureProps {
   columnId: number;

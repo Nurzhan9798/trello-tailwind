@@ -1,21 +1,17 @@
-import React, { useEffect, useState } from "react";
+import { todosActions } from "entities/Todo";
+import React, { useLayoutEffect, useState } from "react";
 import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
-import { Column } from "./Column";
-import {
-  todoColumnsActions,
-  todosActions,
-} from "./entities/Todo/model/slices/todosSlice";
-import { TodoColumn } from "./entities/Todo/model/types/todo";
-import { AddNewColumnFeature } from "./feature/AddNewColumnFeature/AddNewColumnFeature";
-import { useAppDispatch } from "./shared/hooks/useAppDispatch";
-import { useAppSelector } from "./shared/hooks/useAppSelector";
+import { Column, todoColumnsActions } from "entities/Column";
+import { AddNewColumnFeature } from "feature/AddNewColumnFeature";
+import { useAppDispatch } from "shared/hooks/useAppDispatch";
+import { useAppSelector } from "shared/hooks/useAppSelector";
 
-export const CardList = () => {
+export const Board = () => {
   const todoColumns = useAppSelector((state) => state.todoColumns);
   const [columns, setColumns] = useState(todoColumns);
   const dispatch = useAppDispatch();
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const newColumns = [...todoColumns].sort((a, b) => a.order - b.order);
 
     setColumns(newColumns);

@@ -41,6 +41,12 @@ module.exports = (env: EnvVariables) => {
     },
     resolve: {
       extensions: [".tsx", ".ts", ".js"],
+      preferAbsolute: true,
+      modules: [path.resolve(__dirname, "src"), "node_modules"],
+      mainFiles: ["index"],
+      alias: {
+        "@": path.resolve(__dirname, "src"),
+      },
     },
     devServer: {
       port: 3000,

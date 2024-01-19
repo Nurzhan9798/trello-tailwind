@@ -1,8 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
-import {
-  todoColumnsReducer,
-  todosReducer,
-} from "../../../entities/Todo/model/slices/todosSlice";
+import { todoColumnsReducer } from "entities/Column";
+import { todosReducer } from "entities/Todo";
 
 export const store = configureStore({
   reducer: {

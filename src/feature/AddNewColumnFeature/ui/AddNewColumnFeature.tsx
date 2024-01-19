@@ -1,11 +1,6 @@
+import { todoColumnsActions } from "entities/Column";
 import { ChangeEvent, useState } from "react";
-import {
-  todoColumnsActions,
-  todosActions,
-} from "../../entities/Todo/model/slices/todosSlice";
-import { useAppDispatch } from "../../shared/hooks/useAppDispatch";
-
-interface AddNewColumnFeatureProps {}
+import { useAppDispatch } from "shared/hooks/useAppDispatch";
 
 export const AddNewColumnFeature = () => {
   const [isAddingColumn, setIsAddingColumn] = useState(false);
