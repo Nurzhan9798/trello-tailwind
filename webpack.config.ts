@@ -37,6 +37,14 @@ module.exports = (env: EnvVariables) => {
           test: /\.svg$/,
           use: ["@svgr/webpack"],
         },
+        {
+          test: /\.(png|jpe?g|gif)$/i,
+          use: [
+            {
+              loader: "file-loader",
+            },
+          ],
+        },
       ],
     },
     resolve: {

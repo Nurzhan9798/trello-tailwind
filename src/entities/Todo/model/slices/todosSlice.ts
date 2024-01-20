@@ -117,6 +117,11 @@ export const todosSlice = createSlice({
         state[todoIndex].columnId = destinationColumnId;
       }
     },
+    updateTodoById: (state, action: PayloadAction<Todo>) => {
+      const { id, task } = action.payload;
+      const todo = state.find((t) => t.id === id);
+      todo.task = task;
+    },
   },
 });
 

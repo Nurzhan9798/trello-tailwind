@@ -1,5 +1,10 @@
+import { todosActions } from "entities/Todo";
+import { ChangeEvent, useState } from "react";
 import { Draggable } from "react-beautiful-dnd";
+import { useAppDispatch } from "shared/hooks/useAppDispatch";
 import { Todo } from "../model/types/todo";
+import EditIcon from "shared/assets/icons/edit.svg";
+import AvatarImg from "shared/assets/icons/avatar.png";
 
 interface TodoCardProps {
   className?: string;
@@ -8,34 +13,54 @@ interface TodoCardProps {
 
 export const TodoCard = (props: TodoCardProps) => {
   const { todo } = props;
+  const dispatch = useAppDispatch();
+
+  const [task, setTask] = useState(todo.task);
+  const [isEditable, setIsEditable] = useState(false);
+
+  const handleInputChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    setTask(e.target.value);
+    dispatch(todosActions.updateTodoById({ ...todo, task: task }));
+  };
+
+  const toggleEditing = () => {
+    setIsEditable(!isEditable);
+  };
+
+  const disableEditing = () => {
+    setIsEditable(false);
+  };
 
   return (
     <Draggable
       draggableId={"todoDraggableId-" + todo.id.toString()}
       index={todo.order}
     >
-      {(provided, snapshot) => (
+      {(provided) => (
         <div
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
-          className="border-grey hover:bg-grey-lighter cursor-pointer cursor-pointer rounded border-b bg-white p-2"
+          className="hover:bg-grey-lighter flex cursor-pointer cursor-pointer flex-col space-y-4 rounded border border-b border-black bg-white p-2"
         >
-          <p>{todo.task}</p>
-          <div className="text-grey-darker ml-2 mt-8 flex items-start justify-between">
-            <span className="flex items-center text-xs">
-              <svg
-                className="mr-1 h-4 fill-current"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 50 50"
-              >
-                <path d="M11 4c-3.855 0-7 3.145-7 7v28c0 3.855 3.145 7 7 7h28c3.855 0 7-3.145 7-7V11c0-3.855-3.145-7-7-7zm0 2h28c2.773 0 5 2.227 5 5v28c0 2.773-2.227 5-5 5H11c-2.773 0-5-2.227-5-5V11c0-2.773 2.227-5 5-5zm25.234 9.832l-13.32 15.723-8.133-7.586-1.363 1.465 9.664 9.015 14.684-17.324z" />
-              </svg>
-              3/5
-            </span>
+          {isEditable ? (
+            <textarea
+              className="bg-white-100 w-full resize-none rounded-lg border border-black p-2 font-medium outline-1 outline-sky-900 focus:bg-white"
+              value={task}
+              onChange={handleInputChange}
+              rows={3}
+              onBlur={disableEditing}
+            />
+          ) : (
+            <p className="w-full overflow-hidden font-medium">{task}</p>
+          )}
+          <div className="flex items-center justify-between">
+            <button onClick={toggleEditing}>
+              <EditIcon width={20} height={20} />
+            </button>
             <img
-              src="https://lh3.googleusercontent.com/-_5j0-dxnWUA/AAAAAAAAAAI/AAAAAAAAAAA/AMZuucns2T5LKXwqhI3qVQhrAaH99RdlLA/photo.jpg?sz=46"
-              className="h-8 rounded-full"
+              src={AvatarImg}
+              className="h-8 rounded-full border border-black"
             />
           </div>
         </div>

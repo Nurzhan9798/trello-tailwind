@@ -1,3 +1,5 @@
+import AvatarImg from "shared/assets/icons/avatar.png";
+
 interface NavbarProps {
   className?: string;
 }
@@ -6,11 +8,11 @@ export const Navbar = (props: NavbarProps) => {
   const { className } = props;
 
   return (
-    <div className="flex p-2 bg-blue-900 items-center">
-      <div className="hidden md:flex justify-start">
-        <button className="bg-blue-light rounded p-2 font-bold text-white text-sm mr-2 flex">
+    <div className="flex items-center bg-blue-900 p-2">
+      <div className="hidden justify-start md:flex">
+        <button className="bg-blue-light mr-2 flex rounded p-2 text-sm font-bold text-white">
           <svg
-            className="fill-current text-white h-4 mr-2"
+            className="mr-2 h-4 fill-current text-white"
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 50 50"
           >
@@ -21,9 +23,9 @@ export const Navbar = (props: NavbarProps) => {
         <input type="text" className="bg-blue-light rounded p-2" />
       </div>
       <div className="mx-0 md:mx-auto">
-        <h1 className="text-blue-lighter text-xl flex items-center font-sans italic">
+        <h1 className="text-blue-lighter flex items-center font-sans text-xl italic">
           <svg
-            className="fill-current h-8 mr-2"
+            className="mr-2 h-8 fill-current"
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 50 50"
           >
@@ -32,14 +34,14 @@ export const Navbar = (props: NavbarProps) => {
           Trello
         </h1>
       </div>
-      <div className="flex items-center ml-auto">
-        <button className="bg-blue-light rounded h-8 w-8 font-bold text-white text-sm mr-2">
+      <div className="ml-auto flex items-center">
+        <button className="bg-blue-light mr-2 h-8 w-8 rounded text-sm font-bold text-white">
           +
         </button>
-        <button className="bg-blue-light rounded h-8 w-8 font-bold text-white text-sm mr-2">
+        <button className="bg-blue-light mr-2 h-8 w-8 rounded text-sm font-bold text-white">
           i
         </button>
-        <button className="bg-red rounded h-8 w-8 font-bold text-white text-sm mr-2">
+        <button className="bg-red mr-2 h-8 w-8 rounded text-sm font-bold text-white">
           <svg
             className="h-4 fill-current"
             xmlns="http://www.w3.org/2000/svg"
@@ -49,8 +51,8 @@ export const Navbar = (props: NavbarProps) => {
           </svg>
         </button>
         <img
-          src="https://lh3.googleusercontent.com/-_5j0-dxnWUA/AAAAAAAAAAI/AAAAAAAAAAA/AMZuucns2T5LKXwqhI3qVQhrAaH99RdlLA/photo.jpg?sz=46"
-          className="h-8 rounded-full"
+          src={AvatarImg}
+          className="h-8 cursor-pointer rounded-full border border-black"
         />
       </div>
     </div>

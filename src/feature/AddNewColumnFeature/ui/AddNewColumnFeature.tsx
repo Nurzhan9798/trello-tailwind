@@ -28,15 +28,15 @@ export const AddNewColumnFeature = () => {
   if (!isAddingColumn)
     return (
       <button
-        className="shrink-0 grow-0 basis-72 rounded bg-gray-100 bg-opacity-50 px-4 py-2 hover:bg-gray-200 hover:bg-opacity-100"
+        className="shrink-0 grow-0 basis-64 rounded bg-gray-100 bg-opacity-50 px-4 py-2 hover:bg-gray-200 hover:bg-opacity-100"
         onClick={showAddingColumn}
       >
-        Add new cart
+        Add new column
       </button>
     );
 
   return (
-    <div className="shrink-0 grow-0 basis-72 rounded bg-gray-100 p-2 ">
+    <div className="shrink-0 grow-0 basis-64 rounded bg-gray-100 p-2 ">
       <textarea
         rows={3}
         className="w-full resize-none rounded-md p-2"

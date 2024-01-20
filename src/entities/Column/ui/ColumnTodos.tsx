@@ -23,11 +23,11 @@ export const ColumnTodos = (props: ColumnTodosProps) => {
 
   return (
     <Droppable droppableId={"columnDropId-" + column.id.toString()} type="task">
-      {(provided, snapshot) => (
+      {(provided) => (
         <div
           {...provided.droppableProps}
           ref={provided.innerRef}
-          className="p-2"
+          className="space-y-2 p-2"
         >
           {columnTodos.map((todo) => (
             <TodoCard key={todo.id} todo={todo} />

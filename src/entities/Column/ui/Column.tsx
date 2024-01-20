@@ -33,11 +33,11 @@ export const Column = (props: ColumnProps) => {
       draggableId={"columnDraggableId-" + column.id.toString()}
       index={column.order}
     >
-      {(provided, snapshot) => (
+      {(provided) => (
         <div
           ref={provided.innerRef}
           {...provided.draggableProps}
-          className="mr-3 shrink-0 grow-0 basis-72  overflow-hidden overflow-y-auto rounded bg-gray-100"
+          className="mr-3 shrink-0 grow-0 basis-64  overflow-hidden overflow-y-auto rounded bg-gray-200"
         >
           <ColumnHeader
             handleProps={provided.dragHandleProps}
